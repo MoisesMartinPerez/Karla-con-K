@@ -44,7 +44,7 @@ public class InicioSesionController {
             Stage registrarseStage = new Stage();
             registrarseStage.setTitle("Registro de Usuario");
             registrarseStage.setScene(new Scene(root));
-
+            //commit de prueba
             registrarseStage.initModality(Modality.APPLICATION_MODAL);
 
             RegistrarseController registrarseController = fxmlLoader.getController();
