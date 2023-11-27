@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="301.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.karlaconk.controllers.InicioSesionController">
+    <children>
+        <Button fx:id="botonIniciarS" layoutX="157.0" layoutY="171.0" mnemonicParsing="false" onAction="#iniciarSesion" text="Aceptar" />
+        <PasswordField fx:id="textPassword" layoutX="91.0" layoutY="125.0" prefHeight="25.0" prefWidth="189.0" promptText="Contraseña" />
+        <TextField fx:id="textUsuario" layoutX="91.0" layoutY="82.0" prefHeight="25.0" prefWidth="189.0" promptText="Usuario" />
+        <Label layoutX="144.0" layoutY="40.0" text="Inicio de Sesión" />
+        <Label layoutX="95.0" layoutY="208.0" text="¿Aún no tienes cuenta?" />
+        <Hyperlink fx:id="botonRegistrarse" layoutX="218.0" layoutY="205.0" onAction="#registrar" text="Regístrate" />
+    </children>
+</AnchorPane>
