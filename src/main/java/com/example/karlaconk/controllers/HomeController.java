@@ -55,7 +55,7 @@ public class HomeController {
             inicioStage.setScene(new Scene(root));
 
             inicioStage.initModality(Modality.APPLICATION_MODAL);
-
+            // tukutu
             InicioSesionController inicioSesionController = fxmlLoader.getController();
             inicioSesionController.setHomeController(this);
             inicioStage.showAndWait();
