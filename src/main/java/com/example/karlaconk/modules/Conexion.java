@@ -1,4 +1,4 @@
-package com.example.karlaconk.controllers;
+package com.example.karlaconk.modules;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,15 +19,15 @@ public class Conexion {
         return connection;
     }
 
-    public Connection conectar () {
+    public void conectar () {
 
         try{
             connection = DriverManager. getConnection(url, user, pass);
+            System.out.println("Conectado");
         }
         catch(SQLException e){
             e.printStackTrace();
         }
-        return connection;
     }
 
     public void desconectar(){
