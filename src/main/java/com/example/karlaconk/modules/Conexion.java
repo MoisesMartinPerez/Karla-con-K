@@ -30,6 +30,7 @@ public class Conexion {
             connection = DriverManager. getConnection(url, user, pass);
             System.out.println("Conectado");
         }
+        //llll
         catch(SQLException e){
             e.printStackTrace();
         }
