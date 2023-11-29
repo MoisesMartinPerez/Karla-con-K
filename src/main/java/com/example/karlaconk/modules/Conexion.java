@@ -26,11 +26,10 @@ public class Conexion {
 
     public void conectar () {
 
-        try{
-            connection = DriverManager. getConnection(url, user, pass);
+        try {
+            connection = DriverManager.getConnection(url, user, pass);
             System.out.println("Conectado");
         }
-        //llll
         catch(SQLException e){
             e.printStackTrace();
         }
