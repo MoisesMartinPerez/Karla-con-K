@@ -29,7 +29,7 @@ public class HomeController {
 
     private void cargarVentanaRegistro() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("com/example/karlaconk/registrarse-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/registrarse-view.fxml"));
             Parent root = fxmlLoader.load();
             Stage registrarseStage = new Stage();
             registrarseStage.setTitle("Registro de Usuario");
