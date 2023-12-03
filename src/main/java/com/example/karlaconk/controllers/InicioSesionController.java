@@ -23,10 +23,10 @@ public class InicioSesionController {
     public PasswordField textPassword;
     @FXML
     public TextField textUsuario;
-    private HomeController homeController;
+    private PrincipalController principalController;
 
-    public void setHomeController(HomeController homeController) {
-        this.homeController = homeController;
+    public void setPrincipalController(PrincipalController principalController) {
+        this.principalController = principalController;
     }
 
     public void iniciarSesion(ActionEvent actionEvent) {
@@ -39,7 +39,7 @@ public class InicioSesionController {
 
     private void cargarVentanaRegistro() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("com/example/karlaconk/registrarse-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/registrarse-view.fxml"));
             Parent root = fxmlLoader.load();
             Stage registrarseStage = new Stage();
             registrarseStage.setTitle("Registro de Usuario");

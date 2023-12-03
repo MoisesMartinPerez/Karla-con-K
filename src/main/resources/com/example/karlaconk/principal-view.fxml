@@ -18,76 +18,56 @@
    <left>
       <VBox prefHeight="200.0" prefWidth="180.0" styleClass="secondary-color" stylesheets="@../../../CSS/styles.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="nuevaPlaylistHBox" prefHeight="35.0" prefWidth="200.0">
+            <Pane prefHeight="55.0" prefWidth="180.0">
                <children>
-                  <ImageView fx:id="añadirplaylistImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../img/ic_add.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="nuevaPlaylistLabel" alignment="CENTER" prefHeight="35.0" prefWidth="145.0" text="NUEVA PLAYLIST" textFill="#aba9a9">
+                  <Button fx:id="newPlaylistButton" layoutX="-5.0" layoutY="7.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="NUEVA PLAYLIST" textFill="#aba9a9">
                      <font>
-                        <Font size="17.0" />
+                        <Font size="15.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
+                     <graphic>
+                        <ImageView fx:id="añadirplaylistImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../img/ic_add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
-               <VBox.margin>
-                  <Insets left="5.0" />
-               </VBox.margin>
-            </HBox>
+            </Pane>
          </children>
       </VBox>
    </left>
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="740.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="740.0" spacing="15.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="126.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="230.0" spacing="7.0">
                      <children>
-                        <Button fx:id="backButton" mnemonicParsing="false" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fx:id="backButtonImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../img/ic_back.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="forwardButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fx:id="forwardButtonImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../img/ic_forward.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
+                        <Button fx:id="botonInicioSesion" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: transparent;" styleClass="upgrade-button" stylesheets="@../../../CSS/styles.css" text="INICIA SESIÓN" textFill="WHITE" />
+                        <Button fx:id="botonRegistrar" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#registrar" prefHeight="27.0" prefWidth="100.0" style="-fx-background-color: transparent;" styleClass="upgrade-button" stylesheets="@../../../CSS/styles.css" text="REGISTRARTE" textFill="WHITE" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="35.0" prefWidth="190.0" styleClass="search-container" stylesheets="@../../../CSS/styles.css">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="35.0" prefWidth="155.0" styleClass="search-container" stylesheets="@../../../CSS/styles.css">
                      <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../img/ic_search.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="buscarTextField" prefHeight="26.0" prefWidth="146.0" promptText="Buscar..." style="-fx-background-color: transparent;" />
+                        <TextField fx:id="buscarTextField" prefHeight="26.0" prefWidth="150.0" promptText="Buscar..." style="-fx-background-color: transparent;" />
                      </children>
                   </HBox>
-                  <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="editarPerfilButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" styleClass="upgrade-button" stylesheets="@../../../CSS/styles.css" text="EDITAR PERFIL" textFill="WHITE" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                  <Pane prefHeight="56.0" prefWidth="74.0" />
+                  <Button fx:id="perfilButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" styleClass="upgrade-button" stylesheets="@../../../CSS/styles.css" text="PERFIL" textFill="WHITE" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <ImageView fx:id="imagenusuarioImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../img/ProfilePicturePhoto.jpg" />
                            </image>
                         </ImageView>
-                        <Label fx:id="nombreUsuarioLabel" prefHeight="18.0" prefWidth="92.0" text="User Name" textFill="WHITE">
+                        <Label fx:id="nombreUsuarioLabel" prefHeight="20.0" prefWidth="111.0" text="User Name" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -96,12 +76,12 @@
                   </HBox>
                </children>
             </HBox>
-            <VBox prefHeight="178.0" prefWidth="740.0" />
+            <VBox prefHeight="158.0" prefWidth="740.0" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: parent;" VBox.vgrow="ALWAYS">
                <content>
                   <VBox prefHeight="484.0" prefWidth="750.0" spacing="10.0">
                      <children>
-                        <Label text="Ultimos lanzamientos" textFill="WHITE">
+                        <Label text="Últimos lanzamientos" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -141,7 +121,7 @@
                <children>
                   <ImageView fx:id="cancionReproduciendoImageView" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../music_img/el%20efecto.JPG" />
+                        <Image url="@../../../music_img/elEfecto.JPG" />
                      </image>
                   </ImageView>
                   <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="161.0">
@@ -190,7 +170,7 @@
                         <HBox>
                            <children>
                               <Label fx:id="currentTiempoCancionLabel" text="00:00" textFill="WHITE" />
-                              <Slider fx:id="duracionCancionSlider" HBox.hgrow="ALWAYS" />
+                              <Slider fx:id="duracionCancionSlider" blockIncrement="1.0" HBox.hgrow="ALWAYS" />
                               <Label fx:id="remainingTiempoCancionLabel" text="00:00" textFill="WHITE" />
                            </children>
                         </HBox>

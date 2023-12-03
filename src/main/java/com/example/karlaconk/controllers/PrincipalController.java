@@ -1,8 +1,12 @@
 package com.example.karlaconk.controllers;
 
 import com.example.karlaconk.modules.Cancion;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -10,6 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +32,10 @@ public class PrincipalController implements Initializable {
     private ImageView añadirplaylistImg;
 
     @FXML
-    private Button backButton;
+    private Button botonInicioSesion;
 
     @FXML
-    private ImageView backButtonImageView;
+    private Button botonRegistrar;
 
     @FXML
     private TextField buscarTextField;
@@ -42,9 +50,6 @@ public class PrincipalController implements Initializable {
     private Slider duracionCancionSlider;
 
     @FXML
-    private Button editarPerfilButton;
-
-    @FXML
     private Button favoritosButton;
 
     @FXML
@@ -57,22 +62,16 @@ public class PrincipalController implements Initializable {
     private ScrollPane favoritosScrollPane;
 
     @FXML
-    private Button forwardButton;
-
-    @FXML
-    private ImageView forwardButtonImageView;
-
-    @FXML
     private ImageView imagenusuarioImageView;
+
+    @FXML
+    private Button newPlaylistButton;
 
     @FXML
     private Label nombreUsuarioLabel;
 
     @FXML
-    private HBox nuevaPlaylistHBox;
-
-    @FXML
-    private Label nuevaPlaylistLabel;
+    private Button perfilButton;
 
     @FXML
     private Button playButton;
@@ -94,6 +93,8 @@ public class PrincipalController implements Initializable {
 
     List<Cancion> nuevosLanzamientos;
     List<Cancion> favoritos;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nuevosLanzamientos = new ArrayList<>(getNuevosLanzamientos());
@@ -124,6 +125,51 @@ public class PrincipalController implements Initializable {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    public void registrar(ActionEvent actionEvent) {
+        cargarVentanaRegistro();
+    }
+
+    public void iniciarSesion(ActionEvent actionEvent) {
+        cargarVentanaInicioSesion();
+    }
+
+    private void cargarVentanaRegistro() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/registrarse-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage registrarseStage = new Stage();
+            registrarseStage.setTitle("Registro de Usuario");
+            registrarseStage.setScene(new Scene(root));
+
+            registrarseStage.initModality(Modality.APPLICATION_MODAL);
+
+            RegistrarseController registrarseController = fxmlLoader.getController();
+            registrarseController.setPrincipalController(this);
+            registrarseStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarVentanaInicioSesion(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/iniciarSesion-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage inicioStage = new Stage();
+            inicioStage.setTitle("Inicio de Sesión");
+            inicioStage.setScene(new Scene(root));
+
+            inicioStage.initModality(Modality.APPLICATION_MODAL);
+
+            InicioSesionController inicioSesionController = fxmlLoader.getController();
+            inicioSesionController.setPrincipalController(this);
+            inicioStage.showAndWait();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -159,5 +205,6 @@ public class PrincipalController implements Initializable {
 
         return ls;
     }
+
 }
 

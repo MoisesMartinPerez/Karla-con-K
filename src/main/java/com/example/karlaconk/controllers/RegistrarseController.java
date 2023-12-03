@@ -1,11 +1,9 @@
 package com.example.karlaconk.controllers;
 
-import com.example.karlaconk.modules.Conexion;
 import com.example.karlaconk.modules.GestionBD;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -29,7 +27,7 @@ public class RegistrarseController implements Initializable {
     public TextField textNombre;
 
 
-    private HomeController homeController;
+    private PrincipalController principalController;
     private InicioSesionController inicioSesionController;
 
     @Override
@@ -37,8 +35,8 @@ public class RegistrarseController implements Initializable {
 
     }
 
-    public void setHomeController(HomeController homeController) {
-        this.homeController = homeController;
+    public void setPrincipalController(PrincipalController principalController) {
+        this.principalController = principalController;
     }
     public void setInicioSesionController(InicioSesionController inicioSesionController){
         this.inicioSesionController = inicioSesionController;
