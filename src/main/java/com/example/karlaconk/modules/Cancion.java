@@ -11,7 +11,7 @@ public class Cancion {
     private String genero;
     private int anio;
     private byte[] audioCancion;
-    private byte[] imagenCancion;
+    private String imagenCancion;
 
     // Constructores, getters y setters
 
@@ -20,7 +20,7 @@ public class Cancion {
     }
 
     public Cancion(int idCancion, String titulo, String artista, LocalTime duracion,
-                   boolean favorito, String genero, int anio, byte[] audioCancion, byte[] imagenCancion) {
+                   boolean favorito, String genero, int anio, byte[] audioCancion, String imagenCancion) {
         this.idCancion = idCancion;
         this.titulo = titulo;
         this.artista = artista;
@@ -98,11 +98,11 @@ public class Cancion {
         this.audioCancion = audioCancion;
     }
 
-    public byte[] getImagenCancion() {
+    public String getImagenCancion() {
         return imagenCancion;
     }
 
-    public void setImagenCancion(byte[] imagenCancion) {
+    public void setImagenCancion(String imagenCancion) {
         this.imagenCancion = imagenCancion;
     }
 

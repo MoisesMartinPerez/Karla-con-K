@@ -21,8 +21,7 @@ CREATE TABLE canciones (
     genero varchar(100),
     año int(4),
     audio_cancion blob, 
-    imagen_cancion blob
-    -- Otros campos según tus necesidades (género, año, etc.)
+    imagen_cancion varchar(100)
 );
 
 insert into canciones values ('01', 'Americano Remix', 'Dj Moisexxx ft. MC Santa María', '0:59', true, 'Clásica', '1864', 
@@ -39,7 +38,7 @@ insert into canciones values ('04', 'Punto 40', 'Rauw Alejandro ft. Baby Rasta',
 	'src/main/resources/cancionesImg/punto40.JPG');
 insert into canciones values ('05', 'Está que Quema', 'YSY A ft. Sixto Yegros', '3:09', false, 'Trap', '2023', 
 	'src/main/resources/canciones/YSY A FT. SIXTO YEGROS - ESTA QUE QUEMA (Letra_Lyrics) [PROD. BAXIAN]_40YL-83RuF4.mp3', 
-	'');
+	'src/main/resources/music_img/estaquequema.JPG');
     
 select * from canciones;
 
