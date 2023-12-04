@@ -147,16 +147,16 @@ public class PrincipalController implements Initializable{
             }
 
             // PropertyValueFactory corresponde a el nuevo campo de Cancion
-            //los tableColums son los que establecimos en la clase desde el view
-//            idTableColum.setCellFactory(new PropertyValueFactory<>("idCancion"));
-//            tituloTableColum.setCellFactory(new PropertyValueFactory<>("titulo"));
-//            artistaTableColum.setCellFactory(new PropertyValueFactory<>("artista"));
-//            duracionTableColum.setCellFactory(new PropertyValueFactory<>("duracion"));
-//            favoritoTableColum.setCellFactory(new PropertyValueFactory<>("favorito"));
-//            generoTableColum.setCellFactory(new PropertyValueFactory<>("genero"));
-//            releaseDateTableColum.setCellFactory(new PropertyValueFactory<>("releaseDate"));
-//            audioTableColum.setCellFactory(new PropertyValueFactory<>("audioCancion"));
-//            portadaTableColum.setCellFactory(new PropertyValueFactory<>("imagenCancion"));
+           // los tableColums son los que establecimos en la clase desde el view
+            idTableColum.setCellFactory(new PropertyValueFactory<>("idCancion"));
+            tituloTableColum.setCellFactory(new PropertyValueFactory<>("titulo"));
+            artistaTableColum.setCellFactory(new PropertyValueFactory<>("artista"));
+            duracionTableColum.setCellFactory(new PropertyValueFactory<>("duracion"));
+            favoritoTableColum.setCellFactory(new PropertyValueFactory<>("favorito"));
+            generoTableColum.setCellFactory(new PropertyValueFactory<>("genero"));
+            releaseDateTableColum.setCellFactory(new PropertyValueFactory<>("releaseDate"));
+            audioTableColum.setCellFactory(new PropertyValueFactory<>("audioCancion"));
+            portadaTableColum.setCellFactory(new PropertyValueFactory<>("imagenCancion"));
 
             // hacemos un set a los elementos del TableView de las canciones con la lista Observable rellenada
             cancionesTableView.setItems(cancionObservableList);
