@@ -4,11 +4,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,8 +34,16 @@ public class Conexion {
         }
     }
 
-    public static boolean ingresar(String nombre, String password){
-        String sql = "insert into clientes ( nombre_usuario, clave) values (?, ?)";
+
+    public void desconectar(){
+        try{
+            connection.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+}
 
 //        try{  //metodo comprobacion para ver si esta correcto
 //
@@ -58,26 +65,15 @@ public class Conexion {
 //        }catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        try{
-            PreparedStatement sentencia = connection.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            sentencia.setString(2, password);
-            sentencia.execute();
-
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
-
-    }
-
-    public void desconectar(){
-        try{
-            connection.close();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-
-}
+//        try{
+//            PreparedStatement sentencia = connection.prepareStatement(sql);
+//            sentencia.setString(1, nombre);
+//            sentencia.setString(2, password);
+//            sentencia.execute();
+//
+//        } catch (SQLException e) {
+//            return false;
+//        }
+//        return true;
+//
+//    }

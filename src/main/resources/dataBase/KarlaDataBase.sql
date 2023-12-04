@@ -16,16 +16,16 @@ CREATE TABLE canciones (
     id_cancion INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(100) NOT NULL,
     artista VARCHAR(100) NOT NULL,
-    duracion TIME NOT NULL,
+    duracion VARCHAR(10) NOT NULL,
     favorito boolean, 
     genero varchar(100),
-    año int(4),
-    audio_cancion blob, 
+    release_date VARCHAR(10),
+    audio_cancion varchar(200), 
     imagen_cancion varchar(100)
 );
 
 insert into canciones values ('01', 'Americano Remix', 'Dj Moisexxx ft. MC Santa María', '0:59', true, 'Clásica', '1864', 
-	"src/main/resources/canciones/Americano x Heads Will Roll Dance till you're dead DJP Mashup TikTok Bass Boosted.mp3", 
+	'src/main/resources/canciones/Americano x Heads Will Roll Dance till youre dead DJP Mashup TikTok Bass Boosted.mp3', 
 	'src/main/resources/cancionesImg/papaAmericano.JPG');
 insert into canciones values ('02', 'Candy', 'Plan B', '3:27', true, 'Reggaetón', '2014', 
 	'src/main/resources/canciones/Plan B - Candy [Official Audio]_k8nxe6UE1gY.mp3', 

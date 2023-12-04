@@ -1,29 +1,32 @@
 package com.example.karlaconk.controllers;
 
 import com.example.karlaconk.modules.Cancion;
+import com.example.karlaconk.modules.Conexion;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class PrincipalController implements Initializable {
+public class PrincipalController implements Initializable{
+
+    @FXML
+    private TableColumn artistaTableColum;
 
     @FXML
     private Label autorCancionReprodLabel;
@@ -44,22 +47,28 @@ public class PrincipalController implements Initializable {
     private ImageView cancionReproduciendoImageView;
 
     @FXML
+    private TableView<Cancion> cancionesTableView;
+
+    @FXML
     private Label currentTiempoCancionLabel;
 
     @FXML
     private Slider duracionCancionSlider;
 
     @FXML
-    private Button favoritosButton;
+    private TableColumn duracionTableColum;
 
     @FXML
-    private HBox favoritosContainer;
+    private Button favoritosButton;
 
     @FXML
     private ImageView favoritosCorazonImageView;
 
     @FXML
-    private ScrollPane favoritosScrollPane;
+    private TableColumn generoTableColum;
+
+    @FXML
+    private TableColumn idTableColum;
 
     @FXML
     private ImageView imagenusuarioImageView;
@@ -80,51 +89,83 @@ public class PrincipalController implements Initializable {
     private ImageView playImageView;
 
     @FXML
+    private TableColumn portadaTableColum;
+
+    @FXML
+    private TableColumn releaseDateTableColum;
+
+    @FXML
+    private TableColumn favoritoTableColum;
+
+    @FXML
+    private TableColumn audioTableColum;
+
+    @FXML
     private Label remainingTiempoCancionLabel;
 
     @FXML
     private Label tituloCancionReprodLabel;
 
     @FXML
-    private HBox ultimosLanzamientosContainer;
+    private TableColumn tituloTableColum;
 
-    @FXML
-    private ScrollPane ultimosLanzamientosScrollPane;
-
-    List<Cancion> nuevosLanzamientos;
-    List<Cancion> favoritos;
+    ObservableList<Cancion> cancionObservableList = FXCollections.observableArrayList();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nuevosLanzamientos = new ArrayList<>(getNuevosLanzamientos());
-        favoritos = new ArrayList<>(getListaFavoritos());
 
-//        try {
-//            for (Cancion nuevosLanzamiento : nuevosLanzamientos) {
-//                FXMLLoader fxmlLoader = new FXMLLoader();
-//                fxmlLoader.setLocation(getClass().getResource("cancion-view.fxml"));
-//
-//                VBox vBox = fxmlLoader.load();
-//                CancionController cancionController = fxmlLoader.getController();
-//                cancionController.setDatos(nuevosLanzamiento);
-//
-//                ultimosLanzamientosContainer.getChildren().add(vBox);
-//            }
-//
-//            for (Cancion favoritosCancion : favoritos) {
-//                FXMLLoader fxmlLoader = new FXMLLoader();
-//                fxmlLoader.setLocation(getClass().getResource("cancion-view.fxml"));
-//
-//                VBox vBox = fxmlLoader.load();
-//                CancionController cancionController = fxmlLoader.getController();
-//                cancionController.setDatos(favoritosCancion);
-//
-//                favoritosContainer.getChildren().add(vBox);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        tablaInicial();
+    }
+
+    public void tablaInicial(){
+        Connection connectDB= Conexion.getConnection();
+
+        // sentencia SQL - query para ejecutr la instruccion
+        String tablaCancionQuery = "SELECT id_cancion, titulo, artista, duracion, favorito, genero, release_date, audio_cancion, imagen_cancion FROM canciones";
+
+        try{
+
+            Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery(tablaCancionQuery);
+
+            while(queryOutput.next()){
+
+                Integer queryCancionID = queryOutput.getInt("id_cancion");
+                String queryCancionTitulo = queryOutput.getString("titulo");
+                String queryCancionArtista = queryOutput.getString("artista");
+                String queryCancionDuracion = queryOutput.getString("duracion");
+                Boolean queryCancionFavorito = queryOutput.getBoolean("favorito");
+                String queryCancionGenero = queryOutput.getString("genero");
+                String queryCancionReleaseDate = queryOutput.getString("release_date");
+                String queryCancionAudio = queryOutput.getString("audio_cancion");
+                String queryCancionImagen = queryOutput.getString("imagen_cancion");
+
+                // rellenamos elObservable List de la interfaz principal con las canciones de la base de datos para que sean ovservables
+                cancionObservableList.add(new Cancion(queryCancionID, queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionFavorito, queryCancionGenero, queryCancionReleaseDate, queryCancionAudio, queryCancionImagen));
+
+            }
+
+            // PropertyValueFactory corresponde a el nuevo campo de Cancion
+            //los tableColums son los que establecimos en la clase desde el view
+//            idTableColum.setCellFactory(new PropertyValueFactory<>("idCancion"));
+//            tituloTableColum.setCellFactory(new PropertyValueFactory<>("titulo"));
+//            artistaTableColum.setCellFactory(new PropertyValueFactory<>("artista"));
+//            duracionTableColum.setCellFactory(new PropertyValueFactory<>("duracion"));
+//            favoritoTableColum.setCellFactory(new PropertyValueFactory<>("favorito"));
+//            generoTableColum.setCellFactory(new PropertyValueFactory<>("genero"));
+//            releaseDateTableColum.setCellFactory(new PropertyValueFactory<>("releaseDate"));
+//            audioTableColum.setCellFactory(new PropertyValueFactory<>("audioCancion"));
+//            portadaTableColum.setCellFactory(new PropertyValueFactory<>("imagenCancion"));
+
+            // hacemos un set a los elementos del TableView de las canciones con la lista Observable rellenada
+            cancionesTableView.setItems(cancionObservableList);
+
+
+        }catch (SQLException e){
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE,null,e);
+            e.printStackTrace();
+        }
     }
 
     public void registrar(ActionEvent actionEvent) {
@@ -172,39 +213,6 @@ public class PrincipalController implements Initializable {
         }
     }
 
-
-    /**
-     * metodo para inicializar la lista de canciones predeterminada en lainterfaz
-     * */
-    private List<Cancion> getNuevosLanzamientos(){
-        List<Cancion> ls = new ArrayList<>();
-
-        Cancion cancion = new Cancion();
-        cancion.setArtista("La Moises");
-        cancion.setTitulo("Punto 40");
-        cancion.setImagenCancion("/music_img/punto40.JPG");
-        ls.add(cancion);
-
-        cancion = new Cancion();
-        cancion.setArtista("La MAngie");
-        cancion.setTitulo("Tumbala");
-        cancion.setImagenCancion("/music_img/el efecto.JPG");
-        ls.add(cancion);
-
-        return ls;
-    }
-
-    private List<Cancion> getListaFavoritos() {
-        List<Cancion> ls = new ArrayList<>();
-
-        Cancion cancion = new Cancion();
-        cancion.setArtista("La Moises");
-        cancion.setTitulo("Punto 40");
-        cancion.setImagenCancion("/music_img/punto40.JPG");
-        ls.add(cancion);
-
-        return ls;
-    }
 
 }
 

@@ -30,3 +30,19 @@
 .scroll-pane > .viewport{
     -fx-background-color: #181818;
 }
+
+.table-view {
+    -fx-background-color: black; /* Color de fondo del TableView */
+    -fx-text-fill: white; /* Color de la fuente del TableView */
+}
+
+/* Estilo para las filas del TableView */
+.table-row-cell {
+    -fx-background-color: black; /* Color de fondo de las filas */
+}
+
+/* Estilo para las celdas del TableView */
+.table-cell {
+    -fx-border-color: #dddddd; /* Color del borde de las celdas */
+    -fx-padding: 5px;
+}

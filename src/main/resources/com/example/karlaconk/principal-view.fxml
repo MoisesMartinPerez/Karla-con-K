@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -76,37 +79,32 @@
                   </HBox>
                </children>
             </HBox>
-            <VBox prefHeight="158.0" prefWidth="740.0" />
+            <VBox prefHeight="36.0" prefWidth="740.0" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: parent;" VBox.vgrow="ALWAYS">
                <content>
                   <VBox prefHeight="484.0" prefWidth="750.0" spacing="10.0">
                      <children>
-                        <Label text="Últimos lanzamientos" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <ScrollPane fx:id="ultimosLanzamientosScrollPane" fitToWidth="true" minViewportHeight="220.0" prefHeight="214.0" prefWidth="739.0" style="-fx-background-color: transparent;">
-                           <content>
-                              <HBox fx:id="ultimosLanzamientosContainer" prefHeight="0.0" prefWidth="0.0" spacing="30.0" />
-                           </content>
-                        </ScrollPane>
-                        <Label text="Favoritos" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <ScrollPane fx:id="favoritosScrollPane" fitToWidth="true" minViewportHeight="205.0" prefHeight="214.0" prefWidth="739.0" style="-fx-background-color: transparent;">
-                           <content>
-                              <HBox fx:id="favoritosContainer" prefHeight="0.0" prefWidth="0.0" spacing="30.0" />
-                           </content>
-                        </ScrollPane>
+                        <TableView fx:id="cancionesTableView" prefHeight="505.0" prefWidth="750.0" style="-fx-background-color: transparent;" stylesheets="@../../../CSS/styles.css">
+                          <columns>
+                            <TableColumn fx:id="idTableColum" prefWidth="54.399964332580566" text="ID" />
+                            <TableColumn fx:id="tituloTableColum" prefWidth="73.60004806518555" text="Titulo" />
+                              <TableColumn fx:id="artistaTableColum" minWidth="7.20001220703125" prefWidth="62.39996337890625" text="Artista" />
+                              <TableColumn fx:id="duracionTableColum" prefWidth="84.79994201660156" text="Duración" />
+                              <TableColumn fx:id="generoTableColum" prefWidth="64.0" text="Genero" />
+                              <TableColumn fx:id="releaseDateTableColum" prefWidth="71.20001220703125" text="Date" />
+                              <TableColumn fx:id="portadaTableColum" maxWidth="204.0" prefWidth="95.20001220703125" text="Portada" />
+                              <TableColumn fx:id="favoritoTableColum" maxWidth="182.4000244140625" prefWidth="79.199951171875" text="Favorito" />
+                              <TableColumn fx:id="audioTableColum" maxWidth="105.5999755859375" prefWidth="105.5999755859375" text="Audio" />
+                          </columns>
+                           <styleClass>
+                              <String fx:value="table-view" />
+                              <String fx:value="table-row-cell" />
+                              <String fx:value="table-cell" />
+                           </styleClass>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TableView>
                      </children>
                   </VBox>
                </content>
