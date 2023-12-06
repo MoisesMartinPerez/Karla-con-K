@@ -1,25 +1,25 @@
 package com.example.karlaconk.modules;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaReproduccion {
+/**
+ *
+ * @Clase: Playlist,para registrar las playlist de el usuario*/
+public class Playlist {
     private int idLista;
     private String nombreLista;
     private int idUsuario;
+    private List<Cancion> canciones;
 
     // Constructores, getters y setters
 
-    public ListaReproduccion() {
-        // Constructor vacío
-    }
-
-    public ListaReproduccion(int idLista, String nombreLista, int idUsuario) {
+    public Playlist(int idLista, String nombreLista, int idUsuario) {
         this.idLista = idLista;
         this.nombreLista = nombreLista;
         this.idUsuario = idUsuario;
+        this.canciones = new ArrayList<>();
     }
-
-    // Getters y setters para cada campo
 
     public int getIdLista() {
         return idLista;
@@ -44,5 +44,14 @@ public class ListaReproduccion {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
+
+    public List<Cancion> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(List<Cancion> canciones) {
+        this.canciones = canciones;
+    }
+
 
 }

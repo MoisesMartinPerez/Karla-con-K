@@ -5,6 +5,8 @@ public class Usuario {
     private String nombreUsuario;
     private String clave;
     private byte[] imagenUsuario;
+    private static boolean sesionIniciada = false;
+
 
     // Constructores, getters y setters
 
@@ -20,6 +22,14 @@ public class Usuario {
     }
 
     // Getters y setters para cada campo
+    public static boolean isSesionIniciada() {
+        return sesionIniciada;
+    }
+
+    public static void setSesionIniciada(boolean estado) {
+        sesionIniciada = estado;
+    }
+
 
     public int getIdUsuario() {
         return idUsuario;
@@ -52,5 +62,4 @@ public class Usuario {
     public void setImagenUsuario(byte[] imagenUsuario) {
         this.imagenUsuario = imagenUsuario;
     }
-
 }

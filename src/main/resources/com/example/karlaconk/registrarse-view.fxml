@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="234.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.karlaconk.controllers.RegistrarseController">
+<AnchorPane prefHeight="345.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.karlaconk.controllers.RegistrarseController">
     <children>
-        <Button fx:id="botonCrear" layoutX="76.0" layoutY="179.0" mnemonicParsing="false" onAction="#crearCuenta" text="Crear Cuenta" />
-        <Button fx:id="botonCancelar" layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-        <PasswordField fx:id="textConfPassw" layoutX="76.0" layoutY="117.0" prefHeight="25.0" prefWidth="195.0" promptText="Confirmar Contraseña" />
-        <PasswordField fx:id="textPassword" layoutX="76.0" layoutY="75.0" prefHeight="25.0" prefWidth="195.0" promptText="Contraseña" />
-        <TextField fx:id="textNombre" layoutX="76.0" layoutY="34.0" prefHeight="25.0" prefWidth="195.0" promptText="Nombre" />
+        <Button fx:id="botonCrear" layoutX="75.0" layoutY="280.0" mnemonicParsing="false" onAction="#crearCuenta" text="Crear Cuenta" />
+        <Button fx:id="botonCancelar" layoutX="206.0" layoutY="280.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+        <PasswordField fx:id="textConfPassw" layoutX="76.0" layoutY="221.0" prefHeight="25.0" prefWidth="195.0" promptText="Confirmar Contraseña" />
+        <PasswordField fx:id="textPassword" layoutX="76.0" layoutY="183.0" prefHeight="25.0" prefWidth="195.0" promptText="Contraseña" />
+        <TextField fx:id="textNombre" layoutX="76.0" layoutY="147.0" prefHeight="25.0" prefWidth="195.0" promptText="Nombre" />
+        <Label layoutX="118.0" layoutY="99.0" text="Elige tu foto de perfil" />
+        <Label fx:id="labelErrorPassword" layoutX="109.0" layoutY="246.0" text="Las contraseñas no coinciden" textFill="RED">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelErrorUsuarioExist" layoutX="104.0" layoutY="261.0" text="Nombre de usuario ya existente" textFill="RED">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelErrorCampos" layoutX="83.0" layoutY="253.0" text="No puede dejar ningún campo en blanco" textFill="RED">
+            <font>
+                <Font size="10.0" />
+            </font>
+        </Label>
+        <Button fx:id="buttonImg" layoutX="127.0" layoutY="14.0" mnemonicParsing="false" onAction="#cambiarImagen" prefHeight="75.0" prefWidth="75.0">
+            <graphic>
+                <ImageView fx:id="imgUserEmpty" fitHeight="77.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../img/Usuario-Vacio.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
     </children>
 </AnchorPane>

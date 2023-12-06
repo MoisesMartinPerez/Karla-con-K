@@ -23,7 +23,7 @@
          <children>
             <Pane prefHeight="55.0" prefWidth="180.0">
                <children>
-                  <Button fx:id="newPlaylistButton" layoutX="-5.0" layoutY="7.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="NUEVA PLAYLIST" textFill="#aba9a9">
+                  <Button fx:id="playlistButton" layoutX="-5.0" layoutY="7.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="PLAYLIST" textFill="#aba9a9">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -37,6 +37,12 @@
                   </Button>
                </children>
             </Pane>
+            <VBox prefHeight="98.0" prefWidth="180.0" />
+            <TableView fx:id="listasTableView" prefHeight="463.0" prefWidth="180.0">
+              <columns>
+                <TableColumn fx:id="listaTableColum" prefWidth="178.3999908566475" text="MIS PLAYLIST" />
+              </columns>
+            </TableView>
          </children>
       </VBox>
    </left>
@@ -84,17 +90,13 @@
                <content>
                   <VBox prefHeight="484.0" prefWidth="750.0" spacing="10.0">
                      <children>
-                        <TableView fx:id="cancionesTableView" prefHeight="505.0" prefWidth="750.0" stylesheets="@../../../CSS/styles.css">
+                        <TableView fx:id="cancionesTableView" prefHeight="519.0" prefWidth="750.0" stylesheets="@../../../CSS/styles.css">
                           <columns>
-                            <TableColumn fx:id="idTableColum" prefWidth="54.399964332580566" text="ID" />
-                            <TableColumn fx:id="tituloTableColum" prefWidth="73.60004806518555" text="Titulo" />
-                              <TableColumn fx:id="artistaTableColum" minWidth="7.20001220703125" prefWidth="62.39996337890625" text="Artista" />
-                              <TableColumn fx:id="duracionTableColum" prefWidth="84.79994201660156" text="Duración" />
-                              <TableColumn fx:id="generoTableColum" prefWidth="64.0" text="Genero" />
-                              <TableColumn fx:id="releaseDateTableColum" prefWidth="71.20001220703125" text="Date" />
-                              <TableColumn fx:id="portadaTableColum" maxWidth="204.0" prefWidth="95.20001220703125" text="Portada" />
-                              <TableColumn fx:id="favoritoTableColum" maxWidth="182.4000244140625" prefWidth="79.199951171875" text="Favorito" />
-                              <TableColumn fx:id="audioTableColum" maxWidth="105.5999755859375" prefWidth="105.5999755859375" text="Audio" />
+                            <TableColumn fx:id="tituloTableColum" prefWidth="226.40002155303955" text="TITULO" />
+                              <TableColumn fx:id="artistaTableColum" minWidth="7.20001220703125" prefWidth="201.59999084472656" text="ARTISTA" />
+                              <TableColumn fx:id="duracionTableColum" prefWidth="112.79998779296875" text="DURACIÓN" />
+                              <TableColumn fx:id="generoTableColum" prefWidth="100.0" text="GENERO" />
+                              <TableColumn fx:id="releaseDateTableColum" prefWidth="97.60003662109375" text="DATE" />
                           </columns>
                            <styleClass>
                               <String fx:value="table-view" />

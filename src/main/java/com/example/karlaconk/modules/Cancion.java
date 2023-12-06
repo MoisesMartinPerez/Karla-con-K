@@ -15,7 +15,7 @@ public class Cancion {
     // Constructores, getters y setters
 
 
-    public Cancion(int idCancion, String titulo, String artista, String duracion, boolean favorito, String genero, String releaseDate, String audioCancion, String imagenCancion) {
+    public Cancion(String titulo, String artista, String duracion, String genero, String releaseDate) {
         this.idCancion = idCancion;
         this.titulo = titulo;
         this.artista = artista;

@@ -2,6 +2,8 @@ package com.example.karlaconk.controllers;
 
 import com.example.karlaconk.modules.Cancion;
 import com.example.karlaconk.modules.Conexion;
+import com.example.karlaconk.modules.Playlist;
+import com.example.karlaconk.modules.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,10 +16,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -70,13 +74,13 @@ public class PrincipalController implements Initializable{
     private TableColumn generoTableColum;
 
     @FXML
-    private TableColumn idTableColum;
-
-    @FXML
     private ImageView imagenusuarioImageView;
 
     @FXML
-    private Button newPlaylistButton;
+    private TableColumn listaTableColum;
+
+    @FXML
+    private TableView<Playlist> listasTableView;
 
     @FXML
     private Label nombreUsuarioLabel;
@@ -91,16 +95,10 @@ public class PrincipalController implements Initializable{
     private ImageView playImageView;
 
     @FXML
-    private TableColumn portadaTableColum;
+    private Button playlistButton;
 
     @FXML
     private TableColumn releaseDateTableColum;
-
-    @FXML
-    private TableColumn favoritoTableColum;
-
-    @FXML
-    private TableColumn audioTableColum;
 
     @FXML
     private Label remainingTiempoCancionLabel;
@@ -113,11 +111,93 @@ public class PrincipalController implements Initializable{
 
     ObservableList<Cancion> cancionObservableList = FXCollections.observableArrayList();
 
+    private Usuario usuario;
+
+    private RegistrarseController registrarseController;
+    private InicioSesionController inicioSesionController;
+    private CambiosPerfilController cambiosPerfilController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         tablaInicial();
+        if(Usuario.isSesionIniciada()){
+            botonRegistrar.setVisible(false);
+            botonInicioSesion.setVisible(false);
+            // Si hay un usuario, muestra su imagen y nombre
+            if (usuario != null) {
+                System.out.println("Longitud de la imagen: " + usuario.getImagenUsuario().length);
+                imagenusuarioImageView.setImage(new Image(new ByteArrayInputStream(usuario.getImagenUsuario())));
+                nombreUsuarioLabel.setText(usuario.getNombreUsuario());
+            } else {
+                System.out.println("¡Advertencia! El usuario es nulo.");
+            }
+        } else {
+            nombreUsuarioLabel.setVisible(false);
+            imagenusuarioImageView.setVisible(false);
+            perfilButton.setVisible(false);
+        }
+    }
+
+    public void setRegistrarseController(RegistrarseController registrarseController) {
+        this.registrarseController = registrarseController;
+    }
+    public void setInicioSesionController(InicioSesionController inicioSesionController){
+        this.inicioSesionController = inicioSesionController;
+    }
+    public void setCambiosPerfilController(CambiosPerfilController cambiosPerfilController) {
+        this.cambiosPerfilController = cambiosPerfilController;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        System.out.println("Usuario establecido en PrincipalController: " + usuario);
+        actualizarInterfazGrafica();
+    }
+
+    public Usuario getUsuario() {
+        return usuario != null ? usuario: new Usuario(); // Si usuario es null, devuelve un nuevo Usuario
+    }
+
+    private void actualizarInterfazGrafica() {
+        // Implementa la actualización de la interfaz gráfica aquí según los cambios en el usuario
+        // Por ejemplo, actualiza la imagen y el nombre de usuario en la GUI
+        if (Usuario.isSesionIniciada()) {
+            imagenusuarioImageView.setImage(new Image(new ByteArrayInputStream(usuario.getImagenUsuario())));
+            nombreUsuarioLabel.setText(usuario.getNombreUsuario());
+        }
+    }
+
+    public void modificarPerfil(ActionEvent actionEvent) {
+        //Cerrar ventana Principal
+        Stage stage = (Stage) perfilButton.getScene().getWindow();
+        stage.close();
+        System.out.println("ventana principal cerrada");
+
+        cargarVentanaPerfil();
+
+    }
+
+    public void cargarVentanaPerfil(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/perfil-view.fxml"));
+            Parent root = loader.load();
+            System.out.println("carga fxml gucci");
+            Stage perfilStage = new Stage();
+            perfilStage.setTitle("Perfil");
+            perfilStage.setScene(new Scene(root));
+
+            perfilStage.initModality(Modality.APPLICATION_MODAL);
+
+            CambiosPerfilController cambiosPerfilController = loader.getController();
+            cambiosPerfilController.setPrincipalController(this);
+            System.out.println("el controller carga guapo");
+            perfilStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void tablaInicial(){
@@ -133,32 +213,24 @@ public class PrincipalController implements Initializable{
 
             while(queryOutput.next()){
 
-                Integer queryCancionID = queryOutput.getInt("id_cancion");
                 String queryCancionTitulo = queryOutput.getString("titulo");
                 String queryCancionArtista = queryOutput.getString("artista");
                 String queryCancionDuracion = queryOutput.getString("duracion");
-                Boolean queryCancionFavorito = queryOutput.getBoolean("favorito");
                 String queryCancionGenero = queryOutput.getString("genero");
                 String queryCancionReleaseDate = queryOutput.getString("release_date");
-                String queryCancionAudio = queryOutput.getString("audio_cancion");
-                String queryCancionImagen = queryOutput.getString("imagen_cancion");
 
                 // rellenamos elObservable List de la interfaz principal con las canciones de la base de datos para que sean ovservables
-                cancionObservableList.add(new Cancion(queryCancionID, queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionFavorito, queryCancionGenero, queryCancionReleaseDate, queryCancionAudio, queryCancionImagen));
+                cancionObservableList.add(new Cancion(queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionGenero, queryCancionReleaseDate));
 
             }
 
             // PropertyValueFactory corresponde a el nuevo campo de Cancion
            // los tableColums son los que establecimos en la clase desde el view
-            idTableColum.setCellValueFactory(new PropertyValueFactory<>("idCancion"));
             tituloTableColum.setCellValueFactory(new PropertyValueFactory<>("titulo"));
             artistaTableColum.setCellValueFactory(new PropertyValueFactory<>("artista"));
             duracionTableColum.setCellValueFactory(new PropertyValueFactory<>("duracion"));
-            favoritoTableColum.setCellValueFactory(new PropertyValueFactory<>("favorito"));
             generoTableColum.setCellValueFactory(new PropertyValueFactory<>("genero"));
             releaseDateTableColum.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
-            audioTableColum.setCellValueFactory(new PropertyValueFactory<>("audioCancion"));
-            portadaTableColum.setCellValueFactory(new PropertyValueFactory<>("imagenCancion"));
 
 
             // hacemos un set a los elementos del TableView de las canciones con la lista Observable rellenada
@@ -203,10 +275,20 @@ public class PrincipalController implements Initializable{
     }
 
     public void registrar(ActionEvent actionEvent) {
+        //Cerrar ventana Principal
+        Stage stage = (Stage) botonRegistrar.getScene().getWindow();
+        stage.close();
+        System.out.println("ventana principal cerrada");
+
         cargarVentanaRegistro();
+
     }
 
     public void iniciarSesion(ActionEvent actionEvent) {
+        // Cerrar ventana principal
+        Stage stage = (Stage) botonInicioSesion.getScene().getWindow();
+        stage.close();
+
         cargarVentanaInicioSesion();
     }
 
