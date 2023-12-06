@@ -1,8 +1,5 @@
 package com.example.karlaconk.modules;
 
-import javafx.beans.property.*;
-
-
 public class Cancion {
     int idCancion;
     String titulo;

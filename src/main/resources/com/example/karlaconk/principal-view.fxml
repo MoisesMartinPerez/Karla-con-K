@@ -84,7 +84,7 @@
                <content>
                   <VBox prefHeight="484.0" prefWidth="750.0" spacing="10.0">
                      <children>
-                        <TableView fx:id="cancionesTableView" prefHeight="505.0" prefWidth="750.0" style="-fx-background-color: transparent;" stylesheets="@../../../CSS/styles.css">
+                        <TableView fx:id="cancionesTableView" prefHeight="505.0" prefWidth="750.0" stylesheets="@../../../CSS/styles.css">
                           <columns>
                             <TableColumn fx:id="idTableColum" prefWidth="54.399964332580566" text="ID" />
                             <TableColumn fx:id="tituloTableColum" prefWidth="73.60004806518555" text="Titulo" />

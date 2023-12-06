@@ -4,6 +4,8 @@ import com.example.karlaconk.modules.Cancion;
 import com.example.karlaconk.modules.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -148,19 +150,51 @@ public class PrincipalController implements Initializable{
 
             // PropertyValueFactory corresponde a el nuevo campo de Cancion
            // los tableColums son los que establecimos en la clase desde el view
-            idTableColum.setCellFactory(new PropertyValueFactory("idCancion"));
-            tituloTableColum.setCellFactory(new PropertyValueFactory("titulo"));
-            artistaTableColum.setCellFactory(new PropertyValueFactory("artista"));
-            duracionTableColum.setCellFactory(new PropertyValueFactory("duracion"));
-            favoritoTableColum.setCellFactory(new PropertyValueFactory("favorito"));
-            generoTableColum.setCellFactory(new PropertyValueFactory("genero"));
-            releaseDateTableColum.setCellFactory(new PropertyValueFactory("releaseDate"));
-            audioTableColum.setCellFactory(new PropertyValueFactory("audioCancion"));
-            portadaTableColum.setCellFactory(new PropertyValueFactory("imagenCancion"));
+            idTableColum.setCellValueFactory(new PropertyValueFactory<>("idCancion"));
+            tituloTableColum.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+            artistaTableColum.setCellValueFactory(new PropertyValueFactory<>("artista"));
+            duracionTableColum.setCellValueFactory(new PropertyValueFactory<>("duracion"));
+            favoritoTableColum.setCellValueFactory(new PropertyValueFactory<>("favorito"));
+            generoTableColum.setCellValueFactory(new PropertyValueFactory<>("genero"));
+            releaseDateTableColum.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
+            audioTableColum.setCellValueFactory(new PropertyValueFactory<>("audioCancion"));
+            portadaTableColum.setCellValueFactory(new PropertyValueFactory<>("imagenCancion"));
+
 
             // hacemos un set a los elementos del TableView de las canciones con la lista Observable rellenada
             cancionesTableView.setItems(cancionObservableList);
 
+            // implementamos un buscador
+            FilteredList<Cancion> filteredList = new FilteredList<>(cancionObservableList, b -> true);
+            buscarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredList.setPredicate(Cancion -> {
+
+                    // si no hay ningun texto en el buscador se muestran todas las canciones disponibles
+                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null){
+                        return true;
+                    }
+
+                    String buscarPalabra = newValue.toLowerCase();
+
+                    if (Cancion.getTitulo().toLowerCase().indexOf(buscarPalabra) > -1){
+                        return true; // buscamos por titulo
+                    } else if (Cancion.getArtista().toLowerCase().indexOf(buscarPalabra) > -1) {
+                        return true; // buscamos por artista
+                    }else if (Cancion.getGenero().toLowerCase().indexOf(buscarPalabra) > -1) {
+                        return true; // buscamos por genero
+                    }else {
+                        return false; // no encuentra ningun mach
+                    }
+                });
+            });
+
+            // creamoun sorted List para las palabras buscadas en procesode escritura
+            SortedList<Cancion> sortedList = new SortedList<>(filteredList);
+
+            sortedList.comparatorProperty().bind(cancionesTableView.comparatorProperty());
+
+            // aplicamos la busqueda a la tabla
+            cancionesTableView.setItems(sortedList);
 
         }catch (SQLException e){
             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE,null,e);

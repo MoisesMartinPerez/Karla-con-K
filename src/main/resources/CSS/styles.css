@@ -27,10 +27,6 @@
     -fx-border-radius: 50;
 }
 
-.scroll-pane > .viewport{
-    -fx-background-color: #181818;
-}
-
 .table-view {
     -fx-background-color: black; /* Color de fondo del TableView */
     -fx-text-fill: white; /* Color de la fuente del TableView */
