@@ -68,7 +68,7 @@
                      </children>
                   </HBox>
                   <Pane prefHeight="56.0" prefWidth="74.0" />
-                  <Button fx:id="perfilButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" styleClass="upgrade-button" stylesheets="@../../../CSS/styles.css" text="PERFIL" textFill="WHITE" />
+                  <Button fx:id="perfilButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#modificarPerfil" prefHeight="26.0" prefWidth="90.0" styleClass="upgrade-button" stylesheets="@../../../CSS/styles.css" text="PERFIL" textFill="WHITE" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <ImageView fx:id="imagenusuarioImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -86,7 +86,7 @@
                </children>
             </HBox>
             <VBox prefHeight="36.0" prefWidth="740.0" />
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: parent;" VBox.vgrow="ALWAYS">
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <content>
                   <VBox prefHeight="484.0" prefWidth="750.0" spacing="10.0">
                      <children>
