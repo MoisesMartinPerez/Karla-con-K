@@ -1,17 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
-  <tabs>
-    <Tab text="NUEVA PLAYLITS" />
-    <Tab text="EDIT" />
-      <Tab text="ELIMINAR">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-  </tabs>
-</TabPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.karlaconk.controllers.PlaylistController">
+   <children>
+      <TableView fx:id="listasTableView" layoutX="97.0" layoutY="349.0" prefHeight="336.0" prefWidth="184.0">
+        <columns>
+          <TableColumn fx:id="listaTableColum" prefWidth="183.19999313354492" text="MIS PLAYLIST" />
+        </columns>
+      </TableView>
+      <TableView fx:id="cancionesTableView" layoutX="459.0" layoutY="349.0" prefHeight="336.0" prefWidth="462.0">
+        <columns>
+          <TableColumn fx:id="tituloTableColum" prefWidth="109.60003662109375" text="TITULO" />
+          <TableColumn fx:id="artistaTableColum" prefWidth="100.79998779296875" text="ARTISTA" />
+            <TableColumn fx:id="duracionTableColum" prefWidth="92.79998779296875" text="DURACIÓN" />
+            <TableColumn fx:id="generoTableColum" prefWidth="70.4000244140625" text="GENERO" />
+            <TableColumn fx:id="releaseDateTableColum" prefWidth="89.5999755859375" text="DATE" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" layoutX="591.0" layoutY="274.0" prefHeight="47.0" prefWidth="221.0" styleClass="search-container" stylesheets="@../../../CSS/styles.css">
+         <children>
+            <ImageView fitHeight="39.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/ic_search.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="buscarTextField" prefHeight="42.0" prefWidth="157.0" promptText="Buscar..." style="-fx-background-color: transparent;" />
+         </children>
+      </HBox>
+      <ToolBar prefHeight="40.0" prefWidth="985.0">
+        <items>
+          <Button fx:id="nuevaPlaylistButton" mnemonicParsing="false" text="NUEVA PLAYLIST" />
+            <Button fx:id="editarPlaylistButton" mnemonicParsing="false" text="EDITAR PLAYLIST" />
+            <Button fx:id="eliminarPlaylistButton" mnemonicParsing="false" text="BORRAR PLAYLIST" />
+            <Button fx:id="cerrarVentanaButton" mnemonicParsing="false" onAction="#volver" text="VOLVER" />
+        </items>
+      </ToolBar>
+      <Pane fx:id="editarPlaylistPane" layoutX="493.0" layoutY="40.0" prefHeight="184.0" prefWidth="428.0">
+         <children>
+            <Label layoutX="24.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="NUEVO NOMBRE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="editarNombrePlaylistTextField" layoutX="145.0" layoutY="27.0" prefHeight="25.0" prefWidth="184.0" stylesheets="@../../../CSS/styles.css" />
+            <Button fx:id="addSongToPlaylistButton" layoutX="70.0" layoutY="132.0" mnemonicParsing="false" text="AÑADIR CANCIÓN" />
+            <Button fx:id="dropSongFromPlailystButton" layoutX="226.0" layoutY="132.0" mnemonicParsing="false" text="QUITAR CANCIÓN" />
+            <Label fx:id="seleccionCancionEditLabel" layoutX="11.0" layoutY="92.0" prefHeight="17.0" prefWidth="407.0" text="Seleciona una canción en el buscador para añadir la o quitarla de tu playlist" />
+            <Label fx:id="nombreSinRellenarEditarLabel" layoutX="145.0" layoutY="52.0" prefHeight="17.0" prefWidth="184.0" text="Elige un nombre para tu playlist" textFill="#f71c1c" />
+            <Button fx:id="guardarNombreEditButton" layoutX="340.0" layoutY="27.0" mnemonicParsing="false" text="GUARDAR" />
+         </children>
+      </Pane>
+      <Pane fx:id="newPlaylistPane" layoutX="27.0" layoutY="57.0" prefHeight="159.0" prefWidth="378.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="148.0" text="NOMBRE DE LA PLAYLIST">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nombrePlaylistTextField" layoutX="177.0" layoutY="15.0" prefHeight="25.0" prefWidth="190.0" stylesheets="@../../../CSS/styles.css" />
+            <Button fx:id="crearPlaylistButton" layoutX="163.0" layoutY="109.0" mnemonicParsing="false" text="CREAR" />
+            <Label layoutX="13.0" layoutY="75.0" text="Una vez creada, edita tu Playlist para añadir tus canciones favoritas" textFill="#434343" />
+            <Label fx:id="nombreSinRellenarCrearLabel" layoutX="180.0" layoutY="40.0" prefHeight="17.0" prefWidth="184.0" text="Elige un nombre para tu playlist" textFill="#f71c1c" />
+         </children>
+      </Pane>
+      <Pane fx:id="dropPlaylistPane" layoutX="32.0" layoutY="224.0" prefHeight="99.0" prefWidth="313.0">
+         <children>
+            <Button fx:id="eliminarPlaylistSelecionadaButton" layoutX="131.0" layoutY="50.0" mnemonicParsing="false" text="BORRAR" />
+            <Label layoutX="57.0" layoutY="6.0" text="Selecciona la playlist que quieras borrar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

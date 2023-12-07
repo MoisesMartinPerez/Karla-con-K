@@ -23,14 +23,14 @@
          <children>
             <Pane prefHeight="55.0" prefWidth="180.0">
                <children>
-                  <Button fx:id="playlistButton" layoutX="-5.0" layoutY="7.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="PLAYLIST" textFill="#aba9a9">
+                  <Button fx:id="playlistButton" layoutX="-5.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cargarVentanaPlaylist" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: transparent;" text="PLAYLIST" textFill="#aba9a9">
                      <font>
                         <Font size="15.0" />
                      </font>
                      <graphic>
-                        <ImageView fx:id="añadirplaylistImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="añadirplaylistImg" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../img/ic_add.png" />
+                              <Image url="@../../../img/ic_playlist.png" />
                            </image>
                         </ImageView>
                      </graphic>

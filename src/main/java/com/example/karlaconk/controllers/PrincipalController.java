@@ -116,6 +116,7 @@ public class PrincipalController implements Initializable{
     private RegistrarseController registrarseController;
     private InicioSesionController inicioSesionController;
     private CambiosPerfilController cambiosPerfilController;
+    private PlaylistController playlistController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -147,6 +148,9 @@ public class PrincipalController implements Initializable{
     }
     public void setCambiosPerfilController(CambiosPerfilController cambiosPerfilController) {
         this.cambiosPerfilController = cambiosPerfilController;
+    }
+    public void setPlaylistController(PlaylistController playlistController){
+        this.playlistController = playlistController;
     }
 
     public void setUsuario(Usuario usuario) {
@@ -325,6 +329,26 @@ public class PrincipalController implements Initializable{
             inicioSesionController.setPrincipalController(this);
             inicioStage.showAndWait();
         }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void cargarVentanaPlaylist() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/playlist-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage playlistStage = new Stage();
+            playlistStage.setTitle("Mis Playlist");
+            playlistStage.setScene(new Scene(root));
+
+            playlistStage.initModality(Modality.APPLICATION_MODAL);
+
+            PlaylistController playlistController = fxmlLoader.getController();
+            playlistController.setPrincipalController(this);
+            playlistStage.showAndWait();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
