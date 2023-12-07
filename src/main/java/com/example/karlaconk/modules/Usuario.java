@@ -6,6 +6,7 @@ public class Usuario {
     private String clave;
     private byte[] imagenUsuario;
     private static boolean sesionIniciada = false;
+    private static int idUsuarioActual;
 
 
     // Constructores, getters y setters
@@ -62,4 +63,13 @@ public class Usuario {
     public void setImagenUsuario(byte[] imagenUsuario) {
         this.imagenUsuario = imagenUsuario;
     }
+
+    public static int getIdUsuarioActual() {
+        return idUsuarioActual;
+    }
+
+    public static void setIdUsuarioActual(int idUsuarioActual) {
+        Usuario.idUsuarioActual = idUsuarioActual;
+    }
 }
+

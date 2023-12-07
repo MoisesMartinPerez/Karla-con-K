@@ -41,6 +41,8 @@ public class InicioSesionController {
             if (usuario != null && usuario.getClave().equals(password)) {
                 // La contraseña es correcta, iniciar sesión
                 Usuario.setSesionIniciada(true);
+                // establecemos el ID del usuario actual
+                Usuario.setIdUsuarioActual(usuario.getIdUsuario());
 
                 // Configurar el usuario en PrincipalController
                 if (principalController != null) {

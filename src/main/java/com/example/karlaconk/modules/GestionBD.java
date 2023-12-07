@@ -5,6 +5,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.karlaconk.modules.Conexion.getConnection;
+
 public class GestionBD {
 
     public static void insertarUsuario(String nombre, String clave, File imagenFile) {
@@ -167,6 +169,31 @@ public class GestionBD {
         }
     }
 
+    /**
+     * metodo para insertar la lista de reproduccion en la base de datos
+     * */
+    public static void insertarListaReproduccion(String nombreLista, int idUsuario) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            String sql = "INSERT INTO listas_reproduccion (nombre_lista, id_usuario) VALUES (?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setString(1, nombreLista);
+                stmt.setInt(2, idUsuario);
+                stmt.executeUpdate();
+
+                // obtenemos el ID de la lista de reproducción recién creada
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int idLista = generatedKeys.getInt(1);
+                        // imprimimos o utilizar el ID para comprobar
+                        System.out.println("ID de la nueva lista de reproducción: " + idLista);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static byte[] obtenerImagenUsuario(String nombreUsuario) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
             String sql = "SELECT imagen_usuario FROM usuario WHERE nombre_usuario = ?";
@@ -183,5 +210,6 @@ public class GestionBD {
         }
         return null;
     }
+
 
 }

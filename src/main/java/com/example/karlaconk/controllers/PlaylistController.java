@@ -1,8 +1,6 @@
 package com.example.karlaconk.controllers;
 
-import com.example.karlaconk.modules.Cancion;
-import com.example.karlaconk.modules.Conexion;
-import com.example.karlaconk.modules.Playlist;
+import com.example.karlaconk.modules.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -116,6 +114,8 @@ public class PlaylistController implements Initializable {
     ObservableList<Cancion> cancionObservableList = FXCollections.observableArrayList();
     private PrincipalController principalController;
 
+
+
     public void setPrincipalController(PrincipalController principalController) {
         this.principalController = principalController;
     }
@@ -124,7 +124,10 @@ public class PlaylistController implements Initializable {
         newPlaylistPane.setVisible(false);
         editarPlaylistPane.setVisible(false);
         dropPlaylistPane.setVisible(false);
+        nombreSinRellenarCrearLabel.setVisible(false);
+        nombreSinRellenarEditarLabel.setVisible(false);
 
+        tablaInicial();
 
     }
 
@@ -200,6 +203,52 @@ public class PlaylistController implements Initializable {
             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE,null,e);
             e.printStackTrace();
         }
+    }
+
+    /**
+     * metodo para mostrar ñlas opciones CRUD de lasplaylist
+     * */
+    public void accionBotonesEdicion(ActionEvent actionEvent){
+        if (actionEvent.getSource() == nuevaPlaylistButton){
+            newPlaylistPane.setVisible(true);
+            editarPlaylistPane.setVisible(false);
+            dropPlaylistPane.setVisible(false);
+        } else if (actionEvent.getSource() == editarPlaylistButton) {
+            newPlaylistPane.setVisible(false);
+            editarPlaylistPane.setVisible(true);
+            dropPlaylistPane.setVisible(false);
+        }else if (actionEvent.getSource() == eliminarPlaylistButton) {
+            newPlaylistPane.setVisible(false);
+            editarPlaylistPane.setVisible(false);
+            dropPlaylistPane.setVisible(true);
+        }else {
+            newPlaylistPane.setVisible(false);
+            editarPlaylistPane.setVisible(false);
+            dropPlaylistPane.setVisible(false);
+        }
+
+    }
+
+    public void crearPlaylist(ActionEvent actionEvent) {
+        String nombreLista = nombrePlaylistTextField.getText();
+
+        if (!nombreLista.isEmpty() && !nombreLista.isBlank()) {
+            int idUsuario = ObtenerIdUsuarioActual();
+
+            // llamamos al método insertarListaReproduccion para crear la nueva playlist
+            GestionBD.insertarListaReproduccion(nombreLista, idUsuario);
+
+        } else {
+            nombreSinRellenarCrearLabel.setVisible(true);
+        }
+    }
+
+    /**
+     * metodo para devolver el id del usuario actual
+     * */
+    private int ObtenerIdUsuarioActual() {
+        // devolvemosel id del usuario que ha iniciadosecion en el metodo iniciarSesion()
+        return Usuario.getIdUsuarioActual();
     }
 
     /**

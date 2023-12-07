@@ -34,7 +34,6 @@ public class Conexion {
         }
     }
 
-
     public void desconectar(){
         try{
             connection.close();

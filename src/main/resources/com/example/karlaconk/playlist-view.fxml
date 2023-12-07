@@ -41,9 +41,9 @@
       </HBox>
       <ToolBar prefHeight="40.0" prefWidth="985.0">
         <items>
-          <Button fx:id="nuevaPlaylistButton" mnemonicParsing="false" text="NUEVA PLAYLIST" />
-            <Button fx:id="editarPlaylistButton" mnemonicParsing="false" text="EDITAR PLAYLIST" />
-            <Button fx:id="eliminarPlaylistButton" mnemonicParsing="false" text="BORRAR PLAYLIST" />
+          <Button fx:id="nuevaPlaylistButton" mnemonicParsing="false" onAction="#accionBotonesEdicion" text="NUEVA PLAYLIST" />
+            <Button fx:id="editarPlaylistButton" mnemonicParsing="false" onAction="#accionBotonesEdicion" text="EDITAR PLAYLIST" />
+            <Button fx:id="eliminarPlaylistButton" mnemonicParsing="false" onAction="#accionBotonesEdicion" text="BORRAR PLAYLIST" />
             <Button fx:id="cerrarVentanaButton" mnemonicParsing="false" onAction="#volver" text="VOLVER" />
         </items>
       </ToolBar>
@@ -70,7 +70,7 @@
                </font>
             </Label>
             <TextField fx:id="nombrePlaylistTextField" layoutX="177.0" layoutY="15.0" prefHeight="25.0" prefWidth="190.0" stylesheets="@../../../CSS/styles.css" />
-            <Button fx:id="crearPlaylistButton" layoutX="163.0" layoutY="109.0" mnemonicParsing="false" text="CREAR" />
+            <Button fx:id="crearPlaylistButton" layoutX="163.0" layoutY="109.0" mnemonicParsing="false" onAction="#crearPlaylist" text="CREAR" />
             <Label layoutX="13.0" layoutY="75.0" text="Una vez creada, edita tu Playlist para añadir tus canciones favoritas" textFill="#434343" />
             <Label fx:id="nombreSinRellenarCrearLabel" layoutX="180.0" layoutY="40.0" prefHeight="17.0" prefWidth="184.0" text="Elige un nombre para tu playlist" textFill="#f71c1c" />
          </children>
