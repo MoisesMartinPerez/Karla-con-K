@@ -198,6 +198,22 @@ public class GestionBD {
     }
 
     /**
+     *  metodo para modificar el nombre de una playlist en la base de datos
+     * */
+    public static void actualizarNombrePlaylist(int idLista, String nuevoNombre) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            String sql = "UPDATE listas_reproduccion SET nombre_lista = ? WHERE id_lista = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, nuevoNombre);
+                stmt.setInt(2, idLista);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      *  metodo para eliminar una playlist de la base de datos
      * */
     public static void eliminarPlaylist(int idLista) {

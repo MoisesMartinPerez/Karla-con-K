@@ -287,6 +287,37 @@ public class PlaylistController implements Initializable {
     }
 
     /**
+     * metodo para editar el nombre de una playlist
+     * */
+    public void editarNombrePlaylist() {
+        // obtenemos la playlist seleccionada desde la tabla
+        Playlist playlistSeleccionada = listasTableView.getSelectionModel().getSelectedItem();
+
+        if (playlistSeleccionada != null) {
+            // obtenemos el nuevo nombre desde el campo de texto
+            String nuevoNombre = editarNombrePlaylistTextField.getText();
+
+            // verificamos que el nuevo nombre no esté vacío o en blanco
+            if (!nuevoNombre.isEmpty() && !nuevoNombre.isBlank()) {
+                // actualizamos el nombre de la playlist en la base de datos
+                GestionBD.actualizarNombrePlaylist(playlistSeleccionada.getIdLista(), nuevoNombre);
+
+                // actualizamos la lista observable para mostrar el cambio en la interfaz
+                playlistSeleccionada.setNombreLista(nuevoNombre);
+                listasTableView.refresh();
+
+                // limpiamos el campo de texto después de la edición
+                editarNombrePlaylistTextField.clear();
+
+                System.out.println("Nombre de la playlist actualizado correctamente.");
+                nombreSinRellenarEditarLabel.setVisible(false);
+            } else {
+                nombreSinRellenarEditarLabel.setVisible(true);
+            }
+        }
+    }
+
+    /**
      * metodo para devolver el id del usuario actual
      * */
     public static int ObtenerIdUsuarioActual() {
@@ -308,14 +339,6 @@ public class PlaylistController implements Initializable {
         listasTableView.getItems().clear();
         listasTableView.getItems().addAll(listasReproduccion);
         listaTableColum.setCellValueFactory(new PropertyValueFactory<>("nombreLista"));
-    }
-
-    /**
-     * metodo para volver a la pantalla principal al pulsar el boton de volver
-     * */
-    public void volver(ActionEvent actionEvent) {
-        cerrarVentanaPlaylist();
-        cargarVentanaPrincipal();
     }
 
     /**
