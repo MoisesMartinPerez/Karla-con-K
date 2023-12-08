@@ -20,6 +20,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,6 +131,7 @@ public class PlaylistController implements Initializable {
         nombreSinRellenarEditarLabel.setVisible(false);
 
         tablaInicial();
+        cargarListasReproduccionUsuarioActual();
 
     }
 
@@ -229,6 +233,9 @@ public class PlaylistController implements Initializable {
 
     }
 
+    /**
+     * metodopara crear una playlist nueva
+     * */
     public void crearPlaylist(ActionEvent actionEvent) {
         String nombreLista = nombrePlaylistTextField.getText();
 
@@ -237,6 +244,8 @@ public class PlaylistController implements Initializable {
 
             // llamamos al método insertarListaReproduccion para crear la nueva playlist
             GestionBD.insertarListaReproduccion(nombreLista, idUsuario);
+            nombrePlaylistTextField.setText("");
+            cargarListasReproduccionUsuarioActual();
 
         } else {
             nombreSinRellenarCrearLabel.setVisible(true);
@@ -244,11 +253,61 @@ public class PlaylistController implements Initializable {
     }
 
     /**
+     * metodo para eliminar una lista del usuario
+     * */
+    public void eliminarPlaylist(ActionEvent actionEvent) {
+        // obtenemos la playlist seleccionada en la tabla
+        Playlist playlistSeleccionada = listasTableView.getSelectionModel().getSelectedItem();
+
+        if (playlistSeleccionada != null) {
+            // mostramos un cuadro de diálogo de confirmación
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmar eliminación");
+            alert.setHeaderText("¿Estás seguro de que deseas eliminar la playlist?");
+            alert.setContentText("Esta acción no se puede deshacer.");
+
+            // obtenemos la respuesta del usuario
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // eliminamos la playlist de la base de datos
+                GestionBD.eliminarPlaylist(playlistSeleccionada.getIdLista());
+
+                // actualizamos la tabla de listas de reproducción
+                cargarListasReproduccionUsuarioActual();
+            }
+        } else {
+            // Mostrar un mensaje si no se selecciona ninguna playlist
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("No se ha seleccionado ninguna playlist");
+            alert.setContentText("Por favor, selecciona una playlist para eliminar.");
+            alert.showAndWait();
+        }
+    }
+
+    /**
      * metodo para devolver el id del usuario actual
      * */
-    private int ObtenerIdUsuarioActual() {
+    public static int ObtenerIdUsuarioActual() {
         // devolvemosel id del usuario que ha iniciadosecion en el metodo iniciarSesion()
         return Usuario.getIdUsuarioActual();
+    }
+
+    /**
+     * metodopara cargar en el tableview las listas del usuario que ha iniciado sesion
+     * */
+    public void cargarListasReproduccionUsuarioActual() {
+        // obtenemos el ID del usuario actual
+        int idUsuario = ObtenerIdUsuarioActual();
+
+        // obtenemos las listas de reproducción del usuario actual desde la base de datos
+        ObservableList<Playlist> listasReproduccion = GestionBD.obtenerListasReproduccionUsuario(idUsuario);
+
+        // limpiamos y cargamos las listas de reproducción en la tabla
+        listasTableView.getItems().clear();
+        listasTableView.getItems().addAll(listasReproduccion);
+        listaTableColum.setCellValueFactory(new PropertyValueFactory<>("nombreLista"));
     }
 
     /**

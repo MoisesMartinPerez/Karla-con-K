@@ -1,5 +1,8 @@
 package com.example.karlaconk.modules;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -193,6 +196,58 @@ public class GestionBD {
             e.printStackTrace();
         }
     }
+
+    /**
+     *  metodo para eliminar una playlist de la base de datos
+     * */
+    public static void eliminarPlaylist(int idLista) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            // eliminamos los registros relacionados en la tabla canciones_lista
+            String sqlEliminarCancionesLista = "DELETE FROM canciones_lista WHERE id_lista = ?";
+            try (PreparedStatement stmtEliminarCancionesLista = conn.prepareStatement(sqlEliminarCancionesLista)) {
+                stmtEliminarCancionesLista.setInt(1, idLista);
+                stmtEliminarCancionesLista.executeUpdate();
+            }
+
+            // eliminamos la playlist de labase de datos
+            String sqlEliminarPlaylist = "DELETE FROM listas_reproduccion WHERE id_lista = ?";
+            try (PreparedStatement stmtEliminarPlaylist = conn.prepareStatement(sqlEliminarPlaylist)) {
+                stmtEliminarPlaylist.setInt(1, idLista);
+                stmtEliminarPlaylist.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * metodopara cargar las playlist del usuarioactual
+     * */
+    public static ObservableList<Playlist> obtenerListasReproduccionUsuario(int idUsuario) {
+        ObservableList<Playlist> listasReproduccion = FXCollections.observableArrayList();
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            String sql = "SELECT * FROM listas_reproduccion WHERE id_usuario = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, idUsuario);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int idLista = rs.getInt("id_lista");
+                        String nombreLista = rs.getString("nombre_lista");
+
+                        Playlist playlist = new Playlist(idLista, nombreLista, idUsuario);
+                        listasReproduccion.add(playlist);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listasReproduccion;
+    }
+
 
     public static byte[] obtenerImagenUsuario(String nombreUsuario) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {

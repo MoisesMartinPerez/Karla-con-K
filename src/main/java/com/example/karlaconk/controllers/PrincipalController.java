@@ -1,9 +1,6 @@
 package com.example.karlaconk.controllers;
 
-import com.example.karlaconk.modules.Cancion;
-import com.example.karlaconk.modules.Conexion;
-import com.example.karlaconk.modules.Playlist;
-import com.example.karlaconk.modules.Usuario;
+import com.example.karlaconk.modules.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,6 +25,8 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.example.karlaconk.controllers.PlaylistController.ObtenerIdUsuarioActual;
 
 public class PrincipalController implements Initializable{
 
@@ -122,9 +121,11 @@ public class PrincipalController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         tablaInicial();
+
         if(Usuario.isSesionIniciada()){
             botonRegistrar.setVisible(false);
             botonInicioSesion.setVisible(false);
+            cargarListasReproduccionUsuarioActual();
             // Si hay un usuario, muestra su imagen y nombre
             if (usuario != null) {
                 System.out.println("Longitud de la imagen: " + usuario.getImagenUsuario().length);
@@ -278,6 +279,18 @@ public class PrincipalController implements Initializable{
         }
     }
 
+    public void cargarListasReproduccionUsuarioActual() {
+        // obtenemos el ID del usuario actual
+        int idUsuario = ObtenerIdUsuarioActual();
+
+        // obtenemos las listas de reproducción del usuario actual desde la base de datos
+        ObservableList<Playlist> listasReproduccion = GestionBD.obtenerListasReproduccionUsuario(idUsuario);
+
+        // limpiamos y cargamos las listas de reproducción en la tabla
+        listasTableView.getItems().clear();
+        listasTableView.getItems().addAll(listasReproduccion);
+        listaTableColum.setCellValueFactory(new PropertyValueFactory<>("nombreLista"));
+    }
     public void registrar(ActionEvent actionEvent) {
         //Cerrar ventana Principal
         Stage stage = (Stage) botonRegistrar.getScene().getWindow();

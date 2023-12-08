@@ -36,7 +36,10 @@
                   <Image url="@../../../img/ic_search.png" />
                </image>
             </ImageView>
-            <TextField fx:id="buscarTextField" prefHeight="42.0" prefWidth="157.0" promptText="Buscar..." style="-fx-background-color: transparent;" />
+            <TextField fx:id="buscarTextField" prefHeight="42.0" prefWidth="157.0" promptText="Buscar..." style="-fx-background-color: transparent;">
+               <font>
+                  <Font size="15.0" />
+               </font></TextField>
          </children>
       </HBox>
       <ToolBar prefHeight="40.0" prefWidth="985.0">
@@ -77,7 +80,7 @@
       </Pane>
       <Pane fx:id="dropPlaylistPane" layoutX="32.0" layoutY="224.0" prefHeight="99.0" prefWidth="313.0">
          <children>
-            <Button fx:id="eliminarPlaylistSelecionadaButton" layoutX="131.0" layoutY="50.0" mnemonicParsing="false" text="BORRAR" />
+            <Button fx:id="eliminarPlaylistSelecionadaButton" layoutX="131.0" layoutY="50.0" mnemonicParsing="false" onAction="#eliminarPlaylist" text="BORRAR" />
             <Label layoutX="57.0" layoutY="6.0" text="Selecciona la playlist que quieras borrar" />
          </children>
       </Pane>
