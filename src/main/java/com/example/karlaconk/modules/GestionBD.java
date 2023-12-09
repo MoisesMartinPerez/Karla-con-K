@@ -214,6 +214,23 @@ public class GestionBD {
     }
 
     /**
+     *  metodo para registrar en la base de datos que una cancion ha sidoañadida a una playlist
+     * */
+    private void guardarCancionEnPlaylist(int idLista, int idCancion) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            String sql = "INSERT INTO canciones_lista (id_lista, id_cancion) VALUES (?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, idLista);
+                stmt.setInt(2, idCancion);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejar la excepción de manera adecuada en tu aplicación
+        }
+    }
+
+    /**
      *  metodo para eliminar una playlist de la base de datos
      * */
     public static void eliminarPlaylist(int idLista) {

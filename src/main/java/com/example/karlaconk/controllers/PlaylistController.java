@@ -25,10 +25,7 @@ import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -148,14 +145,18 @@ public class PlaylistController implements Initializable {
 
             while(queryOutput.next()){
 
+                Integer queryCancionID = queryOutput.getInt("id_cancion");
                 String queryCancionTitulo = queryOutput.getString("titulo");
                 String queryCancionArtista = queryOutput.getString("artista");
                 String queryCancionDuracion = queryOutput.getString("duracion");
+                Boolean queryCancionFavoritos = queryOutput.getBoolean("favorito");
                 String queryCancionGenero = queryOutput.getString("genero");
                 String queryCancionReleaseDate = queryOutput.getString("release_date");
+                String queryCancionAudio = queryOutput.getString("audio_cancion");
+                String queryCancionImagen = queryOutput.getString("imagen_cancion");
 
                 // rellenamos elObservable List de la interfaz principal con las canciones de la base de datos para que sean ovservables
-                cancionObservableList.add(new Cancion(queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionGenero, queryCancionReleaseDate));
+                cancionObservableList.add(new Cancion(queryCancionID, queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionFavoritos, queryCancionGenero, queryCancionReleaseDate, queryCancionAudio, queryCancionImagen));
 
             }
 
@@ -339,6 +340,145 @@ public class PlaylistController implements Initializable {
         listasTableView.getItems().clear();
         listasTableView.getItems().addAll(listasReproduccion);
         listaTableColum.setCellValueFactory(new PropertyValueFactory<>("nombreLista"));
+    }
+
+    /**
+     * metodo para añadir una cancion seleccionada a una playlist del usuario
+     * */
+    @FXML
+    private void addSongToPlaylist(ActionEvent event) {
+        // obtenemos la canción seleccionada en cancionesTableView
+        Cancion cancionSeleccionada = cancionesTableView.getSelectionModel().getSelectedItem();
+
+        // obtenemos la playlist seleccionada en listasTableView
+        Playlist playlistSeleccionada = listasTableView.getSelectionModel().getSelectedItem();
+
+        if (cancionSeleccionada != null && playlistSeleccionada != null) {
+            // comprobamos si la canción ya está en la playlist
+            if (!playlistSeleccionada.getCanciones().contains(cancionSeleccionada)) {
+                // agregamos la canción a la playlist
+                playlistSeleccionada.getCanciones().add(cancionSeleccionada);
+
+                // Puedes también guardar estos cambios en la base de datos si es necesario
+
+                // actualizamos la tabla de listas de reproducción para mostrar los cambios
+                listasTableView.refresh();
+                guardarCancionEnPlaylist(playlistSeleccionada.getIdLista(), cancionSeleccionada.getIdCancion());
+
+            } else {
+                // mostramos un mensaje si la canción ya está en la playlist
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Advertencia");
+                alert.setHeaderText("La canción ya está en la playlist");
+                alert.setContentText("La canción seleccionada ya pertenece a la playlist.");
+                alert.showAndWait();
+            }
+        } else {
+            // mostramos un mensaje si no se selecciona ninguna canción o playlist
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("No se ha seleccionado una canción o playlist");
+            alert.setContentText("Por favor, selecciona una canción y una playlist para agregar.");
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     *  metodo para registrar en la base de datos que una cancion ha sidoañadida a una playlist
+     * */
+    private void guardarCancionEnPlaylist(int idLista, int idCancion) {
+        // verificamos si la entrada ya existe en la tabla canciones_lista
+        if (!existeCancionEnPlaylist(idLista, idCancion)) {
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+                String sql = "INSERT INTO canciones_lista (id_lista, id_cancion) VALUES (?, ?)";
+                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                    stmt.setInt(1, idLista);
+                    stmt.setInt(2, idCancion);
+                    stmt.executeUpdate();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("La canción ya está en la playlist.");
+        }
+    }
+
+    /**
+     *  metodopara comprobar si la cancion ya existe dentro de una playlist seleccionada
+     * */
+    private boolean existeCancionEnPlaylist(int idLista, int idCancion) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            String sql = "SELECT * FROM canciones_lista WHERE id_lista = ? AND id_cancion = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, idLista);
+                stmt.setInt(2, idCancion);
+                try (ResultSet resultSet = stmt.executeQuery()) {
+                    return resultSet.next(); // Devuelve true si la entrada ya existe
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejar la excepción de manera adecuada en tu aplicación
+            return false;
+        }
+    }
+
+
+    /**
+     * metodo para quitar una cancion seleccionada en una playlist del usuario
+     * */
+    @FXML
+    private void dropSongFromPlaylist(ActionEvent event) {
+        // obtenemos la cancion seleccionada en cancionesTableView
+        Cancion cancionSeleccionada = cancionesTableView.getSelectionModel().getSelectedItem();
+
+        // obtenemos la playlist seleccionada en listasTableView
+        Playlist playlistSeleccionada = listasTableView.getSelectionModel().getSelectedItem();
+
+        if (cancionSeleccionada != null && playlistSeleccionada != null) {
+            // verificamos si la cancion está en la playlist
+            if (playlistSeleccionada.getCanciones().contains(cancionSeleccionada)) {
+                // eliminamos la cancion de la playlist
+                playlistSeleccionada.getCanciones().remove(cancionSeleccionada);
+
+                // actualizamos la tabla de listas de reproducción para mostrar los cambios
+                listasTableView.refresh();
+
+                // eliminamos la relacion entre la cancion y la playlist en la base de datos
+                eliminarCancionDePlaylist(playlistSeleccionada.getIdLista(), cancionSeleccionada.getIdCancion());
+            } else {
+                // mostramos un mensaje si la cancion no está en la playlist
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Advertencia");
+                alert.setHeaderText("La canción no está en la playlist");
+                alert.setContentText("La canción seleccionada no pertenece a la playlist.");
+                alert.showAndWait();
+            }
+        } else {
+            // mostramos un mensaje si no se selecciona ninguna cancion o playlist
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("No se ha seleccionado una canción o playlist");
+            alert.setContentText("Por favor, selecciona una canción y una playlist para eliminar.");
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     *  metodo para eliminar la relación entre una canción y una playlist en la base de datos
+     *  */
+    private void eliminarCancionDePlaylist(int idLista, int idCancion) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
+            String sql = "DELETE FROM canciones_lista WHERE id_lista = ? AND id_cancion = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, idLista);
+                stmt.setInt(2, idCancion);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

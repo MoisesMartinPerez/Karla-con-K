@@ -58,8 +58,8 @@
                </font>
             </Label>
             <TextField fx:id="editarNombrePlaylistTextField" layoutX="145.0" layoutY="27.0" prefHeight="25.0" prefWidth="184.0" stylesheets="@../../../CSS/styles.css" />
-            <Button fx:id="addSongToPlaylistButton" layoutX="70.0" layoutY="132.0" mnemonicParsing="false" text="AÑADIR CANCIÓN" />
-            <Button fx:id="dropSongFromPlailystButton" layoutX="226.0" layoutY="132.0" mnemonicParsing="false" text="QUITAR CANCIÓN" />
+            <Button fx:id="addSongToPlaylistButton" layoutX="70.0" layoutY="132.0" mnemonicParsing="false" onAction="#addSongToPlaylist" text="AÑADIR CANCIÓN" />
+            <Button fx:id="dropSongFromPlailystButton" layoutX="226.0" layoutY="132.0" mnemonicParsing="false" onAction="#dropSongFromPlaylist" text="QUITAR CANCIÓN" />
             <Label fx:id="seleccionCancionEditLabel" layoutX="11.0" layoutY="92.0" prefHeight="17.0" prefWidth="407.0" text="Seleciona una canción en el buscador para añadir la o quitarla de tu playlist" />
             <Label fx:id="nombreSinRellenarEditarLabel" layoutX="145.0" layoutY="52.0" prefHeight="17.0" prefWidth="184.0" text="Elige un nombre para tu playlist" textFill="#f71c1c" />
             <Button fx:id="guardarNombreEditButton" layoutX="340.0" layoutY="27.0" mnemonicParsing="false" onAction="#editarNombrePlaylist" text="GUARDAR" />

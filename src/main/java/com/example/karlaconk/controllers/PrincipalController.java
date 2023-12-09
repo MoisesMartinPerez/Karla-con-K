@@ -218,14 +218,18 @@ public class PrincipalController implements Initializable{
 
             while(queryOutput.next()){
 
+                Integer queryCancionID = queryOutput.getInt("id_cancion");
                 String queryCancionTitulo = queryOutput.getString("titulo");
                 String queryCancionArtista = queryOutput.getString("artista");
                 String queryCancionDuracion = queryOutput.getString("duracion");
+                Boolean queryCancionFavoritos = queryOutput.getBoolean("favorito");
                 String queryCancionGenero = queryOutput.getString("genero");
                 String queryCancionReleaseDate = queryOutput.getString("release_date");
+                String queryCancionAudio = queryOutput.getString("audio_cancion");
+                String queryCancionImagen = queryOutput.getString("imagen_cancion");
 
                 // rellenamos elObservable List de la interfaz principal con las canciones de la base de datos para que sean ovservables
-                cancionObservableList.add(new Cancion(queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionGenero, queryCancionReleaseDate));
+                cancionObservableList.add(new Cancion(queryCancionID, queryCancionTitulo, queryCancionArtista, queryCancionDuracion, queryCancionFavoritos, queryCancionGenero, queryCancionReleaseDate, queryCancionAudio, queryCancionImagen));
 
             }
 
