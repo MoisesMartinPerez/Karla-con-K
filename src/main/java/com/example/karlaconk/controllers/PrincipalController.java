@@ -28,6 +28,9 @@ import java.util.logging.Logger;
 
 import static com.example.karlaconk.controllers.PlaylistController.ObtenerIdUsuarioActual;
 
+/**
+ * Controlador principal que gestiona la interfaz de usuario y las operaciones principales.
+ */
 public class PrincipalController implements Initializable{
 
     @FXML
@@ -117,6 +120,12 @@ public class PrincipalController implements Initializable{
     private CambiosPerfilController cambiosPerfilController;
     private PlaylistController playlistController;
 
+    /**
+     * Inicializa el controlador.
+     *
+     * @param url             La ubicación del archivo FXML.
+     * @param resourceBundle Los recursos utilizados para localizar el archivo FXML.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -164,6 +173,9 @@ public class PrincipalController implements Initializable{
         return usuario != null ? usuario: new Usuario(); // Si usuario es null, devuelve un nuevo Usuario
     }
 
+    /**
+     * Actualiza la interfaz gráfica con la información del usuario actual.
+     */
     private void actualizarInterfazGrafica() {
         // Implementa la actualización de la interfaz gráfica aquí según los cambios en el usuario
         // Por ejemplo, actualiza la imagen y el nombre de usuario en la GUI
@@ -173,6 +185,11 @@ public class PrincipalController implements Initializable{
         }
     }
 
+    /**
+     * Abre la ventana de modificación del perfil.
+     *
+     * @param actionEvent El evento de acción que desencadenó la llamada al método.
+     */
     public void modificarPerfil(ActionEvent actionEvent) {
         //Cerrar ventana Principal
         Stage stage = (Stage) perfilButton.getScene().getWindow();
@@ -283,6 +300,9 @@ public class PrincipalController implements Initializable{
         }
     }
 
+    /**
+     * Carga las listas de reproducción del usuario actual en la tabla.
+     */
     public void cargarListasReproduccionUsuarioActual() {
         // obtenemos el ID del usuario actual
         int idUsuario = ObtenerIdUsuarioActual();
@@ -295,6 +315,12 @@ public class PrincipalController implements Initializable{
         listasTableView.getItems().addAll(listasReproduccion);
         listaTableColum.setCellValueFactory(new PropertyValueFactory<>("nombreLista"));
     }
+
+    /**
+     * Maneja la acción de registro de un nuevo usuario.
+     *
+     * @param actionEvent El evento de acción que desencadenó la llamada al método.
+     */
     public void registrar(ActionEvent actionEvent) {
         //Cerrar ventana Principal
         Stage stage = (Stage) botonRegistrar.getScene().getWindow();
@@ -305,6 +331,11 @@ public class PrincipalController implements Initializable{
 
     }
 
+    /**
+     * Maneja la acción de iniciar sesión.
+     *
+     * @param actionEvent El evento de acción que desencadenó la llamada al método.
+     */
     public void iniciarSesion(ActionEvent actionEvent) {
         // Cerrar ventana principal
         Stage stage = (Stage) botonInicioSesion.getScene().getWindow();
@@ -313,6 +344,9 @@ public class PrincipalController implements Initializable{
         cargarVentanaInicioSesion();
     }
 
+    /**
+     * Carga la ventana de gestión de listas de reproducción.
+     */
     private void cargarVentanaRegistro() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/registrarse-view.fxml"));

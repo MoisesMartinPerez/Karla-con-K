@@ -1,5 +1,8 @@
 package com.example.karlaconk.modules;
 
+/**
+ * clase para manejar los objetos de tipo cancion de la base de datos
+ * **/
 public class Cancion {
     int idCancion;
     String titulo;

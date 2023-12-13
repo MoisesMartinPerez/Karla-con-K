@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador encargado de gestionar la modificación de datos del perfil de usuario.
+ */
 public class CambiosPerfilController implements Initializable {
     @FXML
     public Button buttonImg;
@@ -43,10 +46,21 @@ public class CambiosPerfilController implements Initializable {
 
     private PrincipalController principalController;
 
+    /**
+     * Establece el controlador principal para comunicación.
+     *
+     * @param principalController El controlador principal.
+     */
     public void setPrincipalController(PrincipalController principalController) {
         this.principalController = principalController;
     }
 
+    /**
+     * Inicializa el controlador.
+     *
+     * @param url             La ubicación del archivo FXML.
+     * @param resourceBundle Los recursos utilizados para localizar el archivo FXML.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialize CambiosPerfilController");
@@ -55,17 +69,22 @@ public class CambiosPerfilController implements Initializable {
         textNombreUsuario.setVisible(false);
     }
 
-
-
-
+    /**
+     * Muestra la interfaz para cambiar el nombre del usuario.
+     *
+     * @param mouseEvent El evento del mouse que desencadenó la llamada al método.
+     */
     public void cambiarNombre(MouseEvent mouseEvent) {
         textNombreUsuario.setVisible(true);
         buttonConfirmarCambios.setVisible(true);
 
     }
 
-
-
+    /**
+     * Cierra la sesión del usuario.
+     *
+     * @param mouseEvent El evento del mouse que desencadenó la llamada al método.
+     */
     public void cerrarSesion(MouseEvent mouseEvent) {
         String mensaje = "¿Estás seguro de que quieres cerrar sesión?";
         if (mostrarConfirmacion(mensaje)) {
@@ -81,6 +100,11 @@ public class CambiosPerfilController implements Initializable {
         }
     }
 
+    /**
+     * Elimina la cuenta del usuario.
+     *
+     * @param mouseEvent El evento del mouse que desencadenó la llamada al método.
+     */
     public void eliminarCuenta(MouseEvent mouseEvent) {
         String mensaje = "¿Estás seguro de que quieres eliminar tu cuenta?";
         if (mostrarConfirmacion(mensaje)) {
@@ -99,7 +123,11 @@ public class CambiosPerfilController implements Initializable {
         }
     }
 
-
+    /**
+     * Confirma los cambios realizados en el perfil del usuario.
+     *
+     * @param actionEvent El evento de acción que desencadenó la llamada al método.
+     */
     public void confirmarCambios(ActionEvent actionEvent) {
         // Obtener el nombre de usuario actual
         String nombreUsuario = textNombreUsuario.getText();
@@ -127,21 +155,22 @@ public class CambiosPerfilController implements Initializable {
         cargarVentanaPrincipal();
     }
 
-
-
-
     private void mostrarInformacion(String mensaje) {
         Alert informacion= new Alert(Alert.AlertType.INFORMATION);
         informacion.setTitle("Información");
         informacion.setHeaderText(mensaje);
     }
 
-
     public void cambiarImg(ActionEvent actionEvent) {
 
 
     }
 
+    /**
+     * Descarta los cambios realizados y vuelve a la ventana principal.
+     *
+     * @param actionEvent El evento de acción que desencadenó la llamada al método.
+     */
     public void decartarCambios(ActionEvent actionEvent) {
         mostrarConfirmacion("¿Seguro que quiere volver? \n " +
                 "\n No se guardarán los cambios introducidos");
@@ -149,6 +178,11 @@ public class CambiosPerfilController implements Initializable {
         cargarVentanaPrincipal();
     }
 
+    /**
+     * Muestra la interfaz para cambiar la clave del usuario.
+     *
+     * @param mouseEvent El evento del mouse que desencadenó la llamada al método.
+     */
     public void cambiarClave(MouseEvent mouseEvent) {
         textNuevaClave.setVisible(true);
         buttonConfirmarCambios.setVisible(true);

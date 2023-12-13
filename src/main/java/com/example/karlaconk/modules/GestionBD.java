@@ -10,8 +10,18 @@ import java.util.List;
 
 import static com.example.karlaconk.modules.Conexion.getConnection;
 
+/**
+ * Clase que proporciona métodos para gestionar la interacción con la base de datos.
+ */
 public class GestionBD {
 
+    /**
+     * Inserta un nuevo usuario en la base de datos.
+     *
+     * @param nombre      El nombre de usuario.
+     * @param clave       La clave del usuario.
+     * @param imagenFile  El archivo de imagen del usuario.
+     */
     public static void insertarUsuario(String nombre, String clave, File imagenFile) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
             String sql = "INSERT INTO usuario (nombre_usuario, clave, imagen_usuario) VALUES (?, ?, ?)";
@@ -60,6 +70,12 @@ public class GestionBD {
         }
     }
 
+    /**
+     * Comprueba si un usuario con el nombre proporcionado ya existe en la base de datos.
+     *
+     * @param nombreUsuario El nombre de usuario a verificar.
+     * @return true si el usuario existe, false en caso contrario.
+     */
     public static boolean existeUsuario(String nombreUsuario) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
             String sql = "SELECT COUNT(*) FROM usuario WHERE nombre_usuario = ?";
@@ -78,6 +94,12 @@ public class GestionBD {
         return false; // Manejar el caso de error de manera adecuada
     }
 
+    /**
+     * Obtiene la información de un usuario desde la base de datos.
+     *
+     * @param nombreUsuario El nombre de usuario del usuario a obtener.
+     * @return El objeto Usuario correspondiente o null si no se encuentra.
+     */
     public static Usuario obtenerUsuario(String nombreUsuario) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
             String sql = "SELECT * FROM usuario WHERE nombre_usuario = ?";
@@ -105,6 +127,11 @@ public class GestionBD {
         return null; // Manejar el caso de error de manera adecuada
     }
 
+    /**
+     * Elimina un usuario y registros relacionados de la base de datos.
+     *
+     * @param nombreUsuario El nombre de usuario del usuario a eliminar.
+     */
     public static void eliminarUsuario(String nombreUsuario) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
             // Eliminar registros relacionados en otras tablas (puedes adaptar esto según tus necesidades)
@@ -132,8 +159,13 @@ public class GestionBD {
         }
     }
 
-
-    //para cambiar los datos
+    /**
+     * Actualiza la información de un usuario en la base de datos.
+     *
+     * @param nombreUsuario El nombre de usuario del usuario a actualizar.
+     * @param nuevoNombre   El nuevo nombre de usuario (puede ser una cadena vacía para no cambiar).
+     * @param nuevaClave    La nueva clave del usuario (puede ser una cadena vacía para no cambiar).
+     */
     public static void actualizarUsuario(String nombreUsuario, String nuevoNombre, String nuevaClave) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
             // Construir la consulta de actualización

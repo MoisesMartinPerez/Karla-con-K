@@ -466,7 +466,7 @@ public class PlaylistController implements Initializable {
     }
 
     /**
-     *  metodo para eliminar la relación entre una canción y una playlist en la base de datos
+     *  Metodo para eliminar la relación entre una canción y una playlist en la base de datos
      *  */
     private void eliminarCancionDePlaylist(int idLista, int idCancion) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Karla", "root", "1234")) {
@@ -482,16 +482,16 @@ public class PlaylistController implements Initializable {
     }
 
     /**
-     * metodopara cerrarla ventana de manejo de playlist
-     * */
+     * Método para cerrar la ventana de gestión de playlist.
+     */
     public void cerrarVentanaPlaylist(){
         Stage stage = (Stage) cerrarVentanaButton.getScene().getWindow();
         stage.close();
     }
 
     /**
-     * metodo para cargar la ventana principal
-     * */
+     * Método para cargar la ventana principal.
+     */
     private void cargarVentanaPrincipal() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/karlaconk/principal-view.fxml"));

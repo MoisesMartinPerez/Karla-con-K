@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la ventana de registro.
+ */
 public class RegistrarseController implements Initializable {
     @FXML
     public Button botonCrear;
@@ -55,6 +58,12 @@ public class RegistrarseController implements Initializable {
         this.inicioSesionController = inicioSesionController;
     }
 
+    /**
+     * Inicializa la ventana de registro.
+     *
+     * @param url             La URL no utilizada.
+     * @param resourceBundle El ResourceBundle no utilizado.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelErrorPassword.setVisible(false);
@@ -62,6 +71,11 @@ public class RegistrarseController implements Initializable {
         labelErrorCampos.setVisible(false);
     }
 
+    /**
+     * Maneja la acción de creación de cuenta.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void crearCuenta(ActionEvent actionEvent) {
         if(comprobaciones()){
             String nombre = textNombre.getText();
@@ -88,6 +102,11 @@ public class RegistrarseController implements Initializable {
         }
     }
 
+    /**
+     * Maneja la acción de cambio de imagen de perfil.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void cambiarImagen(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen de Perfil");
@@ -107,6 +126,9 @@ public class RegistrarseController implements Initializable {
         }
     }
 
+    /**
+     * Comprueba los cassos erroneos
+     */
     private boolean comprobaciones(){
         if (textNombre.getText().isBlank() || textPassword.getText().isBlank() || textConfPassw.getText().isBlank()) {
             // Mostrar labelErrorCampos si hay algún campo en blanco
@@ -137,6 +159,11 @@ public class RegistrarseController implements Initializable {
         return true;
     }
 
+    /**
+     * Muestra una alerta de error con el mensaje proporcionado.
+     *
+     * @param mensaje El mensaje de error.
+     */
     public void alertaError(String mensaje){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

@@ -43,36 +43,3 @@ public class Conexion {
     }
 
 }
-
-//        try{  //metodo comprobacion para ver si esta correcto
-//
-//            String nombre = textNombre.getText();
-//            String password = textPassword.getText();
-//            String confPassword = textConfPassw.getText();
-//
-//            if (nombre.isEmpty() || password.isEmpty() || confPassword.isEmpty()) {
-//                Alert a  = new Alert(Alert.AlertType.ERROR);
-//                a.setContentText("ERROR! Rellena todos los campos.");
-//                a.setTitle("Registrar usuario");
-//                a.setHeaderText(null);
-//                a.showAndWait();
-//                return;
-//            }
-//
-//
-//
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        try{
-//            PreparedStatement sentencia = connection.prepareStatement(sql);
-//            sentencia.setString(1, nombre);
-//            sentencia.setString(2, password);
-//            sentencia.execute();
-//
-//        } catch (SQLException e) {
-//            return false;
-//        }
-//        return true;
-//
-//    }

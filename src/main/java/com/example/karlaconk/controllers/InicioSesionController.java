@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controlador encargado de gestionar el inicio de sesión de usuarios.
+ */
 public class InicioSesionController {
     @FXML
     public Button botonIniciarS;
@@ -24,10 +27,20 @@ public class InicioSesionController {
     public TextField textUsuario;
     private PrincipalController principalController;
 
+    /**
+     * Establece el controlador principal para comunicación.
+     *
+     * @param principalController El controlador principal.
+     */
     public void setPrincipalController(PrincipalController principalController) {
         this.principalController = principalController;
     }
 
+    /**
+     * Realiza la autenticación del usuario y gestiona el inicio de sesión.
+     *
+     * @param actionEvent El evento de acción que desencadenó la llamada al método.
+     */
     public void iniciarSesion(ActionEvent actionEvent) {
         String nombreUsuario = textUsuario.getText();
         String password = textPassword.getText();
